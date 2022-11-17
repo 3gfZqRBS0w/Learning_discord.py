@@ -1,6 +1,24 @@
 # This is my first bot discord so I'm learning at the same time 
-
 import discord
+import os
+
+# FOR DEBUGGING #############################################
+
+def get_veriable_name(variable):
+    current_file = os.path.basename(__file__)
+    with open(current_file, "r") as f:
+        for line in f:
+            if variable in line:
+                return line.split("=")[0].strip()
+    
+    return None
+
+############################################################
+
+
+
+
+
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -14,6 +32,35 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+
+    # simple calculator
+    if message.content.startswith('/calc') :
+        calc = message.content.split(" ")
+        validOperator = ["+", "-", "*","/", "%"]
+
+        try :
+            isValidCommand = type(int(calc[1])) is int and calc[2] in validOperator and type(int(calc[3])) is int
+        except  :
+            isValidCommand = False
+
+        if (isValidCommand) :
+            if (calc[2] == "+") :
+                res = int(calc[1]) + int(calc[3])
+            elif (calc[2] == "-") :
+                res = int(calc[1]) - int(calc[3])
+            elif (calc[2] == "*") :
+                res = int(calc[1]) * int(calc[3])
+            elif (calc[2] == "/") :
+                res = int(calc[1]) / int(calc[3])
+            elif (calc[2] == "%") :
+                res = int(calc[1]) % int(calc[3])
+            calc[0] = " " 
+            await message.channel.send("The result of your request is  :" + " ".join(calc) + " = " + str(res) )
+        else :
+            await message.channel.send("you can't calculate this way")
+            
+
+
     if message.author == client.user:
         return
     if message.content.startswith('/test'):
@@ -26,4 +73,5 @@ async def on_message(message):
 
 
 
-client.run('MTA0MjU1NDQyODk3ODM2ODU1Mg.GiXW5n.CQ_8cv-gx7iNbYWmrv86nCO_9n4cGOKrZJMopQ')
+
+client.run('MTA0MjU1NDQyODk3ODM2ODU1Mg.G4Vm2V.EEzB4zmfjhVL9WhsW6SF3PxBsVoUTp4ya_edkM')
