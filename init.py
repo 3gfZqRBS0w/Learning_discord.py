@@ -15,7 +15,11 @@ def get_veriable_name(variable):
 
 ############################################################
 
-
+#not finished yet
+    if os.path.exists("config.json") :
+        file = open("config.json", "w").readline()
+    else :
+        open("config.json", "w").write(json.dumps({"token": ""}))
 
 
 
@@ -74,4 +78,4 @@ async def on_message(message):
 
 
 
-client.run('MTA0MjU1NDQyODk3ODM2ODU1Mg.G4Vm2V.EEzB4zmfjhVL9WhsW6SF3PxBsVoUTp4ya_edkM')
+client.run('TOKEN')
