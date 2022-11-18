@@ -1,6 +1,10 @@
 # This is my first bot discord so I'm learning at the same time 
 import discord
+import json
 import os
+
+
+
 
 # FOR DEBUGGING #############################################
 
@@ -16,10 +20,6 @@ def get_veriable_name(variable):
 ############################################################
 
 #not finished yet
-    if os.path.exists("config.json") :
-        file = open("config.json", "w").readline()
-    else :
-        open("config.json", "w").write(json.dumps({"token": ""}))
 
 
 
@@ -78,4 +78,17 @@ async def on_message(message):
 
 
 
-client.run('TOKEN')
+if os.path.exists("config.json") :
+    file = json.loads(open("config.json", "r").readline())
+    if (file["token"] == "") :
+        print("the token must be define in config json")
+        quit() ;
+    else :
+        client.run(file["token"])
+else :
+    fp = open('config.json', 'w')
+    fp.write(json.dumps({"token": ""}))
+    fp.close()
+    print("the token must be define in config json")
+    quit()
+
